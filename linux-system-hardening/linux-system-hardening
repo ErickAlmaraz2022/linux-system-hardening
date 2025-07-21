@@ -1,0 +1,6 @@
+linux-system-hardening/
+│
+├── README.md
+├── commands.sh          # Your full set of commands
+├── lynis-report.txt     # Save this from terminal output
+└── screenshots/         # (optional) Terminal screenshots
