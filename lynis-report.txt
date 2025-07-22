@@ -1,1 +1,45 @@
+Step 1: Check and Fix Permissions on Sensitive Files
+cd /etc
+ls -l shadow gshadow group passwd
 
+Result:
+/etc/shadow and /etc/gshadow: -rw-r----- (root read/write, group read only or none)
+/etc/group and /etc/passwd: -rw-r--r-- (root read/write, others read only)
+Conclusion:
+ File permissions are properly configured to secure sensitive user and group data.
+Step 2: Create User Accounts
+sudo useradd sam
+sudo useradd joe
+sudo useradd amy
+sudo useradd sara
+sudo useradd admin1
+
+Step 3: Add Sudo Privileges to admin1
+sudo usermod -aG sudo admin1
+
+Result:
+usermod -aG adds the user to the sudo group without removing others.
+Step 4: Create a Group and Shared Folder
+sudo groupadd engineers
+sudo usermod -aG engineers sam
+sudo usermod -aG engineers joe
+sudo usermod -aG engineers amy
+sudo usermod -aG engineers sara
+
+sudo mkdir /home/engineers
+sudo chown :engineers /home/engineers
+sudo chmod 770 /home/engineers
+
+To confirm users were adding to the ‘engineers’ group:
+
+Conclusion: This sets up a team folder only accessible to the ‘engineer’ group members.
+Step 5: Run Lynis Auditclear
+sudo apt update
+
+sudo apt install lynis
+
+sudo lynis audit system
+
+Result:
+Conclusion:
+lynis scans your system and gives hardening recommendations.
