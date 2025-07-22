@@ -14,3 +14,4 @@ Files Included
 * lynis-report.txt: Full Lynis audit output.
 * README.md: Project summary (this file).
 * Linux System Hardening.pdf
+* commands.sh
