@@ -1,4 +1,5 @@
 Project Overview:
+
 This project focuses on auditing and hardening a Linux system using a hands-on approach. The goal is to identify common vulnerabilities in user management, file permissions, and system configurations,
 then apply best practices to secure the system. The project concludes with a security audit using Lynis, a powerful open-source auditing tool, and provides recommendations for further hardening.
 
