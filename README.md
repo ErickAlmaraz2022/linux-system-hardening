@@ -1,3 +1,7 @@
+Title:
+
+Linux System Hardening
+
 Project Overview:
 
 This project focuses on auditing and hardening a Linux system using a hands-on approach. The goal is to identify common vulnerabilities in user management, file permissions, and system configurations,
