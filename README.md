@@ -1,6 +1,4 @@
-Title:
-
-Linux System Hardening
+Title: Linux System Hardening
 
 Project Overview:
 
