@@ -1,45 +1,225 @@
-Step 1: Check and Fix Permissions on Sensitive Files
-cd /etc
-ls -l shadow gshadow group passwd
 
-Result:
-/etc/shadow and /etc/gshadow: -rw-r----- (root read/write, group read only or none)
-/etc/group and /etc/passwd: -rw-r--r-- (root read/write, others read only)
-Conclusion:
- File permissions are properly configured to secure sensitive user and group data.
-Step 2: Create User Accounts
-sudo useradd sam
-sudo useradd joe
-sudo useradd amy
-sudo useradd sara
-sudo useradd admin1
+-[ Lynis 3.1.4 Results ]-
 
-Step 3: Add Sudo Privileges to admin1
-sudo usermod -aG sudo admin1
+  Warnings (1):
+  ----------------------------
+  ! iptables module(s) loaded, but no rules active [FIRE-4512]
+  	https://cisofy.com/lynis/controls/FIRE-4512/
 
-Result:
-usermod -aG adds the user to the sudo group without removing others.
-Step 4: Create a Group and Shared Folder
-sudo groupadd engineers
-sudo usermod -aG engineers sam
-sudo usermod -aG engineers joe
-sudo usermod -aG engineers amy
-sudo usermod -aG engineers sara
+  Suggestions (48):
+  ----------------------------
+  * This release is more than 4 months old. Check the website or GitHub to see if there is an update available. [LYNIS]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/LYNIS/
 
-sudo mkdir /home/engineers
-sudo chown :engineers /home/engineers
-sudo chmod 770 /home/engineers
+  * Install libpam-tmpdir to set $TMP and $TMPDIR for PAM sessions [DEB-0280]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/DEB-0280/
 
-To confirm users were adding to the ‘engineers’ group:
+  * Install apt-listbugs to display a list of critical bugs prior to each APT installation. [DEB-0810]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/DEB-0810/
 
-Conclusion: This sets up a team folder only accessible to the ‘engineer’ group members.
-Step 5: Run Lynis Auditclear
-sudo apt update
+  * Install apt-listchanges to display any significant changes prior to any upgrade via APT. [DEB-0811]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/DEB-0811/
 
-sudo apt install lynis
+  * Install needrestart, alternatively to debian-goodies, so that you can run needrestart after upgrades to determine which daemons are using old versions of libraries and need restarting. [DEB-0831]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/DEB-0831/
 
-sudo lynis audit system
+  * Install fail2ban to automatically ban hosts that commit multiple authentication errors. [DEB-0880]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/DEB-0880/
 
-Result:
-Conclusion:
-lynis scans your system and gives hardening recommendations.
+  * Set a password on GRUB boot loader to prevent altering boot configuration (e.g. boot in single user mode without password) [BOOT-5122]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/BOOT-5122/
+
+  * Determine runlevel and services at startup [BOOT-5180]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/BOOT-5180/
+
+  * Consider hardening system services [BOOT-5264]
+	- Details  : Run '/usr/bin/systemd-analyze security SERVICE' for each service
+	- Related resources
+  	* Article: Systemd features to secure service files: https://linux-audit.com/systemd/systemd-features-to-secure-units-and-services/
+  	* Website: https://cisofy.com/lynis/controls/BOOT-5264/
+
+  * Configure password hashing rounds in /etc/login.defs [AUTH-9230]
+	- Related resources
+  	* Article: Linux password security: hashing rounds: https://linux-audit.com/authentication/configure-the-minimum-password-length-on-linux-systems/
+  	* Website: https://cisofy.com/lynis/controls/AUTH-9230/
+
+  * Install a PAM module for password strength testing like pam_cracklib or pam_passwdqc or libpam-passwdqc [AUTH-9262]
+	- Related resources
+  	* Article: Configure minimum password length for Linux systems: https://linux-audit.com/configure-the-minimum-password-length-on-linux-systems/
+  	* Website: https://cisofy.com/lynis/controls/AUTH-9262/
+
+  * When possible set expire dates for all password protected accounts [AUTH-9282]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/AUTH-9282/
+
+  * Look at the locked accounts and consider removing them [AUTH-9284]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/AUTH-9284/
+
+  * Configure minimum password age in /etc/login.defs [AUTH-9286]
+- Related resources
+  	* Article: Configure minimum password length for Linux systems: https://linux-audit.com/configure-the-minimum-password-length-on-linux-systems/
+  	* Website: https://cisofy.com/lynis/controls/AUTH-9286/
+
+  * Configure maximum password age in /etc/login.defs [AUTH-9286]
+	- Related resources
+  	* Article: Configure minimum password length for Linux systems: https://linux-audit.com/configure-the-minimum-password-length-on-linux-systems/
+  	* Website: https://cisofy.com/lynis/controls/AUTH-9286/
+
+  * Default umask in /etc/login.defs could not be found and defaults usually to 022, which could be more strict like 027 [AUTH-9328]
+	- Related resources
+  	* Article: Set default file permissions on Linux with umask: https://linux-audit.com/filesystems/file-permissions/set-default-file-permissions-with-umask/
+  	* Website: https://cisofy.com/lynis/controls/AUTH-9328/
+
+  * To decrease the impact of a full /home file system, place /home on a separate partition [FILE-6310]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/FILE-6310/
+
+  * To decrease the impact of a full /var file system, place /var on a separate partition [FILE-6310]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/FILE-6310/
+
+  * Disable drivers like USB storage when not used, to prevent unauthorized storage or data theft [USB-1000]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/USB-1000/
+
+  * Disable drivers like firewire storage when not used, to prevent unauthorized storage or data theft [STRG-1846]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/STRG-1846/
+
+  * Check RPM database as RPM binary available but does not reveal any packages [PKGS-7308]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/PKGS-7308/
+
+ * Install debsums utility for the verification of packages with known good database. [PKGS-7370]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/PKGS-7370/
+
+  * Install package apt-show-versions for patch management purposes [PKGS-7394]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/PKGS-7394/
+
+  * Consider using a tool to automatically apply upgrades [PKGS-7420]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/PKGS-7420/
+
+  * Determine if protocol 'dccp' is really needed on this system [NETW-3200]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/NETW-3200/
+
+  * Determine if protocol 'sctp' is really needed on this system [NETW-3200]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/NETW-3200/
+
+  * Determine if protocol 'rds' is really needed on this system [NETW-3200]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/NETW-3200/
+
+  * Determine if protocol 'tipc' is really needed on this system [NETW-3200]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/NETW-3200/
+
+  * Install Apache mod_evasive to guard webserver against DoS/brute force attempts [HTTP-6640]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/HTTP-6640/
+
+  * Install Apache modsecurity to guard webserver against web application attacks [HTTP-6643]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/HTTP-6643/
+
+  * Change the allow_url_fopen line to: allow_url_fopen = Off, to disable downloads via PHP [PHP-2376]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/PHP-2376/
+
+  * Enable logging to an external logging host for archiving purposes and additional protection [LOGG-2154]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/LOGG-2154/
+
+  * Check what deleted files are still in use and why. [LOGG-2190]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/LOGG-2190/
+
+  * Remove rsh client when it is not in use or replace with the more secure SSH package [INSE-8300]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/INSE-8300/
+
+  * It is recommended that TFTP be removed, unless there is a specific need for TFTP (such as a boot server) [INSE-8318]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/INSE-8318/
+
+  * Removing the atftpd package decreases the risk of the accidental (or intentional) activation of tftp services [INSE-8320]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/INSE-8320/
+
+  * Add a legal banner to /etc/issue, to warn unauthorized users [BANN-7126]
+	- Related resources
+  	* Article: The real purpose of login banners: https://linux-audit.com/the-real-purpose-of-login-banners-on-linux/
+  	* Website: https://cisofy.com/lynis/controls/BANN-7126/
+
+  * Add legal banner to /etc/issue.net, to warn unauthorized users [BANN-7130]
+	- Related resources
+  	* Article: The real purpose of login banners: https://linux-audit.com/the-real-purpose-of-login-banners-on-linux/
+  	* Website: https://cisofy.com/lynis/controls/BANN-7130/
+
+  * Enable process accounting [ACCT-9622]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/ACCT-9622/
+
+  * Enable sysstat to collect accounting (disabled) [ACCT-9626]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/ACCT-9626/
+
+  * Enable auditd to collect audit information [ACCT-9628]
+	- Related resources
+  	* Article: Linux audit framework 101: basic rules for configuration: https://linux-audit.com/linux-audit-framework/linux-audit-framework-101-basic-rules-for-configuration/
+  	* Article: Monitoring Linux file access, changes and data modifications: https://linux-audit.com/monitoring-linux-file-access-changes-and-modifications/
+  	* Website: https://cisofy.com/lynis/controls/ACCT-9628/
+
+  * Install a file integrity tool to monitor changes to critical and sensitive files [FINT-4350]
+	- Related resources
+  	* Article: Monitoring Linux file access, changes and data modifications: https://linux-audit.com/monitoring-linux-file-access-changes-and-modifications/
+  	* Article: Monitor for file changes on Linux: https://linux-audit.com/monitor-for-file-system-changes-on-linux/
+  	* Website: https://cisofy.com/lynis/controls/FINT-4350/
+
+  * Determine if automation tools are present for system management [TOOL-5002]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/TOOL-5002/
+
+  * Consider restricting file permissions [FILE-7524]
+	- Details  : See screen output or log file
+	- Solution : Use chmod to change file permissions
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/FILE-7524/
+
+  * Double check the permissions of home directories as some might be not strict enough. [HOME-9304]
+	- Related resources
+  	* Website: https://cisofy.com/lynis/controls/HOME-9304/
+
+  * One or more sysctl values differ from the scan profile and could be tweaked [KRNL-6000]
+	- Solution : Change sysctl value or disable test (skip-test=KRNL-6000:<sysctl-key>)
+	- Related resources
+  	* Article: Linux hardening with sysctl settings: https://linux-audit.com/linux-hardening-with-sysctl/
+  	* Article: Overview of sysctl options and values: https://linux-audit.com/kernel/sysctl/
+  	* Website: https://cisofy.com/lynis/controls/KRNL-6000/
+
+  * Harden compilers like restricting access to root user only [HRDN-7222]
+	- Related resources
+  	* Article: Why remove compilers from your system?: https://linux-audit.com/software/why-remove-compilers-from-your-system/
+* Website: https://cisofy.com/lynis/controls/HRDN-7222/
+
+  * Harden the system by installing at least one malware scanner, to perform periodic file system scans [HRDN-7230]
+	- Solution : Install a tool like rkhunter, chkrootkit, OSSEC, Wazuh
+	- Related resources
+  	* Article: Antivirus for Linux: is it really needed?: https://linux-audit.com/malware/antivirus-for-linux-really-needed/
+  	* Article: Monitoring Linux Systems for Rootkits: https://linux-audit.com/monitoring-linux-systems-for-rootkits/
+  	* Website: https://cisofy.com/lynis/controls/HRDN-7230/
+
+
