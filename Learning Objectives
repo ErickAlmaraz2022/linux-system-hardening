@@ -1,0 +1,17 @@
+Obejectives:
+Understand and apply basic Linux system hardening techniques
+
+
+Verify and correct file permissions on sensitive system files
+
+
+Create and manage users and groups securely
+
+
+Assign administrative (sudo) privileges correctly
+
+
+Use Lynis to perform a system security audit
+
+
+Interpret audit results and apply recommended improvements
